@@ -71,9 +71,11 @@ if chosen_shape == 'Rectangle':
 
     st.sidebar.image(rectangular_img, width=500)
 
+    st.sidebar.markdown("### Enter main dimension of your pan")
+
     # Input for rectangle dimensions
-    length = st.sidebar.number_input("Enter the length of the pizza (in cm):", min_value=30.0, step=0.5)
-    width = st.sidebar.number_input("Enter the width of the pizza (in cm):", min_value=40.0, step=0.5)
+    length = st.sidebar.number_input("Enter the length of the pizza (in cm):", min_value=30, step=5)
+    width = st.sidebar.number_input("Enter the width of the pizza (in cm):", min_value=40, step=5)
 
     if length and width:
         # Calculate area for rectangle
@@ -87,7 +89,9 @@ elif chosen_shape == 'Circle':
 
     st.sidebar.image(circular_img, width=500)
 
-    radius = st.sidebar.number_input("Enter the radius of the pizza (in cm):", min_value=5.0, step=0.5)
+    st.sidebar.markdown("### Enter main dimension of your pan")
+
+    radius = st.sidebar.number_input("Enter the DIAMETER of the pan (in cm):", min_value=5, step=5) / 2
 
     if radius:
         # Calculate area for circle (πr²)
