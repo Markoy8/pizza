@@ -97,14 +97,28 @@ elif chosen_shape == 'Circle':
         # Calculate ingredients
         flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height)
 
-# Display ingredient amounts
-st.markdown("# Ingredients for Your Pizza:")
-st.markdown(f"## 🌾Flour: {flour:.1f} grams")
-st.write(f"## 💧Water: {water:.1f} ml")
-st.write(f"## 🧂Salt: {salt:.1f} grams")
-st.write(f"## 🦠Yeast: {yeast:.1f} grams")
-st.write(f"## 🫒Oil: {oil:.1f} grams")
-st.write(f"## 🌿Malt: {malt:.1f} grams")
+# Custom CSS for a big button
+st.markdown(
+    """
+    <style>
+    div.stButton > button {
+        font-size: 24px;
+        padding: 15px 30px;
+        border-radius: 10px;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+# Emoji button
+if st.button("🚀 Compute Ingredients"):
+    st.markdown("# Ingredients for Your Pizza:")
+    st.markdown(f"## 🌾Flour: {flour:.1f} grams")
+    st.write(f"## 💧Water: {water:.1f} ml")
+    st.write(f"## 🧂Salt: {salt:.1f} grams")
+    st.write(f"## 🦠Yeast: {yeast:.1f} grams")
+    st.write(f"## 🫒Oil: {oil:.1f} grams")
+    st.write(f"## 🌿Malt: {malt:.1f} grams")
 
 # Show procedure
 #display_procedure(flour, water, salt, yeast, oil, malt)
