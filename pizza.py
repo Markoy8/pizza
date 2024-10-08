@@ -45,7 +45,7 @@ def transform_chosen_height(chosen_height):
 
 
 # Streamlit App
-st.title("Pizza Ingredient Calculator")
+st.title("Pizza Ingredients Calculator")
 st.markdown("Calculate the ingredients for a homemade pizza based on its shape and size!")
 
 st.sidebar.header("Pizza Settings")
