@@ -78,6 +78,48 @@ def display_ingredients(flour, water, salt, yeast, oil, malt):
     styled_df = df_ingredients.style.set_properties(**{'text-align': 'center'}).set_table_styles(styles).apply(highlight_rows, axis=1)
     st.table(styled_df)
 
+def show_flour_details(flour):
+     
+    SEMOLA_PERCENTAGE = 10
+    FARRO_PERCENTAGE = 18
+    TYPE_2_PERCENTAGE = 8
+    TYPE_00_PERCENTAGE = 36
+    TYPE_0_PERCENTAGE = 28 
+
+    flours = {
+        "Flour type": ["Semola", "Farro", "Buratto (2)", "00", "0"],
+        "Quantity (gr)": [
+            int(SEMOLA_PERCENTAGE * flour / 100), 
+            int(FARRO_PERCENTAGE * flour / 100), 
+            int(TYPE_2_PERCENTAGE * flour / 100), 
+            int(TYPE_00_PERCENTAGE * flour / 100), 
+            int(TYPE_0_PERCENTAGE * flour / 100)
+            ]
+    }
+
+    # style
+    th_props = [
+        ('font-size', '18px'),
+        ('text-align', 'center'),
+        ('font-weight', 'bold'),
+        ('color', '#6d6d6d'),
+        ('background-color', '#f6ddcc')
+    ]
+                                
+    td_props = [
+        ('font-size', '18px'),
+        ('color', '#000000')
+    ]
+                                    
+    styles = [
+        dict(selector="th", props=th_props),
+        dict(selector="td", props=td_props)
+    ]
+
+    df_flours = pd.DataFrame.from_dict(flours)
+    styled_df = df_flours.style.set_properties(**{'text-align': 'center'}).set_table_styles(styles).apply(highlight_rows, axis=1)
+    st.table(styled_df)
+
 # Streamlit App
 st.title("Pizza Ingredients Calculator")
 st.markdown("Calculate the ingredients for a homemade pizza based on its shape and size!")
@@ -152,5 +194,10 @@ if st.button("🚀 Compute Ingredients"):
     
     display_ingredients(flour, water, salt, yeast, oil, malt)
     
+
+    # Hidden section, for now collapsed
+    hidden_section = st.expander("Show Flour details")
+    with hidden_section:
+        show_flour_details(flour)
 # Show procedure
 #display_procedure(flour, water, salt, yeast, oil, malt)
