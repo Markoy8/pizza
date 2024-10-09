@@ -57,7 +57,7 @@ def display_ingredients(flour, water, salt, yeast, oil, malt):
 
     # style
     th_props = [
-        ('font-size', '34px'),
+        ('font-size', '18px'),
         ('text-align', 'center'),
         ('font-weight', 'bold'),
         ('color', '#6d6d6d'),
@@ -65,7 +65,7 @@ def display_ingredients(flour, water, salt, yeast, oil, malt):
     ]
                                 
     td_props = [
-        ('font-size', '32px'),
+        ('font-size', '18px'),
     ]
                                     
     styles = [
