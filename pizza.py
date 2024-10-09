@@ -46,7 +46,7 @@ def transform_chosen_height(chosen_height):
 
 # Function to color rows alternatively
 def highlight_rows(row):
-    return ['background-color: #e9e8e8' if row.name % 2 == 0 else 'background-color: #ffffff' for _ in row]
+    return ['background-color: #d6dbdf' if row.name % 2 == 0 else 'background-color: #ffffff' for _ in row]
 
 def display_ingredients(flour, water, salt, yeast, oil, malt):
 
@@ -66,6 +66,7 @@ def display_ingredients(flour, water, salt, yeast, oil, malt):
                                 
     td_props = [
         ('font-size', '18px'),
+        ('color', '#000000')
     ]
                                     
     styles = [
