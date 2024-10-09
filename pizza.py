@@ -1,5 +1,6 @@
 import streamlit as st
 import math
+import pandas as pd
 
 # Function to compute ingredients based on area
 def calculate_ingredients(area, height):
@@ -43,6 +44,38 @@ def transform_chosen_height(chosen_height):
     if chosen_height == 'Thick':
         return 0.65
 
+# Function to color rows alternatively
+def highlight_rows(row):
+    return ['background-color: #e9e8e8' if row.name % 2 == 0 else 'background-color: #ffffff' for _ in row]
+
+def display_ingredients(flour, water, salt, yeast, oil, malt):
+
+    ingredients = {
+        "Ingredient": ["🌾Flour", "💧Water", "🧂Salt", "🦠Yeast", "🫒Oil", "🌿Malt"],
+        "Quantity (gr)": [f"{x:.1f}" for x in [flour, water, salt, yeast, oil, malt]]
+    }
+
+    # style
+    th_props = [
+        ('font-size', '34px'),
+        ('text-align', 'center'),
+        ('font-weight', 'bold'),
+        ('color', '#6d6d6d'),
+        ('background-color', '#f7ffff')
+    ]
+                                
+    td_props = [
+        ('font-size', '32px'),
+    ]
+                                    
+    styles = [
+        dict(selector="th", props=th_props),
+        dict(selector="td", props=td_props)
+    ]
+
+    df_ingredients = pd.DataFrame.from_dict(ingredients)
+    styled_df = df_ingredients.style.set_properties(**{'text-align': 'center'}).set_table_styles(styles).apply(highlight_rows, axis=1)
+    st.table(styled_df)
 
 # Streamlit App
 st.title("Pizza Ingredients Calculator")
@@ -82,8 +115,7 @@ if chosen_shape == 'Rectangle':
         area = length * width
         st.write(f"The area of your rectangular pizza is: {area:.2f} cm²")
 
-        # Calculate ingredients
-        flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height)
+      
 
 elif chosen_shape == 'Circle':
 
@@ -98,8 +130,6 @@ elif chosen_shape == 'Circle':
         area = math.pi * (radius ** 2)
         st.write(f"The area of your circular pizza is: {area:.2f} cm²")
 
-        # Calculate ingredients
-        flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height)
 
 # Custom CSS for a big button
 st.markdown(
@@ -116,13 +146,10 @@ st.markdown(
 
 # Emoji button
 if st.button("🚀 Compute Ingredients"):
-    st.markdown("# Ingredients for Your Pizza:")
-    st.markdown(f"## 🌾Flour: {flour:.1f} grams")
-    st.write(f"## 💧Water: {water:.1f} ml")
-    st.write(f"## 🧂Salt: {salt:.1f} grams")
-    st.write(f"## 🦠Yeast: {yeast:.1f} grams")
-    st.write(f"## 🫒Oil: {oil:.1f} grams")
-    st.write(f"## 🌿Malt: {malt:.1f} grams")
-
+    # Calculate ingredients
+    flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height)
+    
+    display_ingredients(flour, water, salt, yeast, oil, malt)
+    
 # Show procedure
 #display_procedure(flour, water, salt, yeast, oil, malt)
