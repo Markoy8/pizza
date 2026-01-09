@@ -6,15 +6,15 @@ CIRCULAR = 'Circle'
 RECTANGULAR = 'Rectangle'
 
 # Function to compute ingredients based on area
-def calculate_ingredients(area, height, type):
+def calculate_ingredients(area, height, shape_type):
 
-    if type == RECTANGULAR:
+    if shape_type == RECTANGULAR:
         WATER_PERCENTAGE = 80
         SALT_PERCENTAGE = 2
         YEAST_PERCENTAGE = 1.2
         OIL_PERCENTAGE = 2.6
         MALT_PERCENTAGE = 1
-    elif type == CIRCULAR:
+    elif shape_type == CIRCULAR:
         WATER_PERCENTAGE = 70
         SALT_PERCENTAGE = 2.5
         YEAST_PERCENTAGE = 0.2
@@ -88,13 +88,20 @@ def display_ingredients(flour, water, salt, yeast, oil, malt):
     styled_df = df_ingredients.style.set_properties(**{'text-align': 'center'}).set_table_styles(styles).apply(highlight_rows, axis=1)
     st.table(styled_df)
 
-def show_flour_details(flour):
-     
-    SEMOLA_PERCENTAGE = 10
-    FARRO_PERCENTAGE = 18
-    TYPE_2_PERCENTAGE = 8
-    TYPE_00_PERCENTAGE = 36
-    TYPE_0_PERCENTAGE = 28 
+def show_flour_details(flour, shape_type):
+    
+    if shape_type == RECTANGULAR:
+        SEMOLA_PERCENTAGE = 10
+        FARRO_PERCENTAGE = 18
+        TYPE_2_PERCENTAGE = 8
+        TYPE_00_PERCENTAGE = 36
+        TYPE_0_PERCENTAGE = 28 
+    elif shape_type == CIRCULAR:
+        SEMOLA_PERCENTAGE = 00
+        FARRO_PERCENTAGE = 00
+        TYPE_2_PERCENTAGE = 15
+        TYPE_00_PERCENTAGE = 00
+        TYPE_0_PERCENTAGE = 85
 
     flours = {
         "Flour type": ["Semola", "Farro", "Buratto (2)", "00", "0"],
@@ -209,6 +216,6 @@ if st.button("🚀 Compute Ingredients"):
     # Hidden section, for now collapsed
     hidden_section = st.expander("Show Flour details")
     with hidden_section:
-        show_flour_details(flour)
+        show_flour_details(flour, chosen_shape)
 # Show procedure
 #display_procedure(flour, water, salt, yeast, oil, malt)
