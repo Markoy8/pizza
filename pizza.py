@@ -2,14 +2,24 @@ import streamlit as st
 import math
 import pandas as pd
 
-# Function to compute ingredients based on area
-def calculate_ingredients(area, height):
+CIRCULAR = 'Circle'
+RECTANGULAR = 'Rectangle'
 
-    WATER_PERCENTAGE = 80
-    SALT_PERCENTAGE = 2
-    YEAST_PERCENTAGE = 1.2
-    OIL_PERCENTAGE = 2.6
-    MALT_PERCENTAGE = 1
+# Function to compute ingredients based on area
+def calculate_ingredients(area, height, type):
+
+    if type == RECTANGULAR:
+        WATER_PERCENTAGE = 80
+        SALT_PERCENTAGE = 2
+        YEAST_PERCENTAGE = 1.2
+        OIL_PERCENTAGE = 2.6
+        MALT_PERCENTAGE = 1
+    elif type == CIRCULAR:
+        WATER_PERCENTAGE = 70
+        SALT_PERCENTAGE = 2.5
+        YEAST_PERCENTAGE = 0.2
+        OIL_PERCENTAGE = 0.0
+        MALT_PERCENTAGE = 0.0
 
     SUM_PERCENTAGE = WATER_PERCENTAGE + SALT_PERCENTAGE + YEAST_PERCENTAGE + OIL_PERCENTAGE + MALT_PERCENTAGE
     
@@ -137,9 +147,10 @@ rectangular_img = "https://media-assets.lacucinaitaliana.it/photos/61fb0cea67a08
 circular_img = "https://www.tavolartegusto.it/wp/wp-content/uploads/2018/03/pizza-fatta-in-casa-buona-come-in-pizzeria-tutti-i-segreti-Ricetta-Pizza-fatta-in-casa-1-1.jpg"
 
 st.sidebar.markdown("### Choose the shape of the pizza:")
-shapes = ['Rectangle', 'Circle']
+shapes = ['Circle', 'Rectangle']
 chosen_shape = st.sidebar.selectbox("Select shape of your pan", shapes)
 
+number_of_pizzas = st.sidebar.number_input("Enter number of pizzas to make:", min_value=1, step=1, value=1)
 
 # Add height selection buttons    
             
@@ -155,7 +166,7 @@ if chosen_shape == 'Rectangle':
 
     if length and width:
         # Calculate area for rectangle
-        area = length * width
+        area = length * width * number_of_pizzas
         st.write(f"The area of your rectangular pizza is: {area:.2f} cm²")
 
       
@@ -166,12 +177,13 @@ elif chosen_shape == 'Circle':
 
     st.sidebar.markdown("### Enter main dimension of your pan")
 
-    radius = st.sidebar.number_input("Enter the DIAMETER of the pan (in cm):", min_value=5, step=5) / 2
+    radius = st.sidebar.number_input("Enter the DIAMETER of the pan (in cm):", min_value=28, step=5) / 2
 
     if radius:
         # Calculate area for circle (πr²)
-        area = math.pi * (radius ** 2)
+        area = math.pi * (radius ** 2) * number_of_pizzas
         st.write(f"The area of your circular pizza is: {area:.2f} cm²")
+
 
 
 # Custom CSS for a big button
@@ -190,11 +202,10 @@ st.markdown(
 # Emoji button
 if st.button("🚀 Compute Ingredients"):
     # Calculate ingredients
-    flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height)
+    flour, water, salt, yeast, oil, malt = calculate_ingredients(area, height, chosen_shape)
     
     display_ingredients(flour, water, salt, yeast, oil, malt)
     
-
     # Hidden section, for now collapsed
     hidden_section = st.expander("Show Flour details")
     with hidden_section:
